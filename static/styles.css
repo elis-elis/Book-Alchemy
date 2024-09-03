@@ -1,0 +1,87 @@
+/* styles.css */
+
+/* HOME PAGE */
+/* Basic reset for margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* so that padding and borders are included in the element's total width and height.*/
+}
+
+/* Title */
+body h1, h2 {
+    text-align: center;
+}
+
+/* Navigation links */
+nav {
+    text-align: center;
+}
+
+/* Set up the body with a neutral background and text color */
+body {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: lemonchiffon;
+    color: darkslategray;
+    line-height: 1.6;
+    padding: 20px; /* Space around the edges of the body */
+}
+
+/* Style the book list container */
+.book-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap onto the next line */
+    gap: 20px; /* Space between items */
+    justify-content: center; /* Center items horizontally */
+}
+
+/* Style each book item */
+.book-item {
+    background-color: lightcoral;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden; /* Ensure content stays within rounded corners */
+    width: 250px; /* Fixed width for book items */
+    text-align: center; /* Center text */
+    padding: 15px; /* Space inside the book item */
+}
+
+/* Style for the book cover image */
+.book-item img {
+    max-width: 100%; /* Ensure the image fits within the book item */
+    height: auto; /* Maintain aspect ratio */
+    border-bottom: 1px solid #ddd; /* Separator line below the image */
+    margin-bottom: 15px; /* Space below the image */
+}
+
+/* Style for the book title */
+.book-item h2 {
+    font-size: 1.2em; /* Slightly larger font size for the title */
+    margin-bottom: 10px; /* Space below the title */
+    color: darkslategray;
+}
+
+/* Style for paragraphs */
+.book-item p {
+    font-size: 0.9em; /* Slightly smaller font size for details */
+    margin-bottom: 8px; /* Space below each paragraph */
+    color: ghostwhite;
+}
+
+/* Optional: add a hover effect to each book item */
+.book-item:hover {
+    background-color: #a9a5a5;
+    box-shadow: 2 4px 10px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
+    transform: scale(1.02); /* Slight zoom effect on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    color: lightcoral;
+}
+
+/* ADD_BOOK & ADD_AUTHOR */
+form {
+    text-align: center;
+}
+
+.go-home {
+    text-align: center;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E's Library Home Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>°°°°°° SALUT, and welcome °°°°°°°</h1>
+    <h2>E's Library</h2>
+
+    <!-- Navigation to Add Book & Add Author Pages -->
+    <nav>
+    <a href="{{ url_for('add_author') }}">Add Author</a><br>
+    <a href="{{ url_for('add_book') }}">Add Book</a><br>
+    </nav>
+
+   <!-- Sorting Options with Radio Buttons -->
+    <form method="get" action="{{ url_for('home_page') }}">
+        <label>Sort By:</label><br>
+        <input type="radio" name="sort_by" value="title" id="sort_title" onchange="this.form.submit()" {% if sort_by == 'title' %}checked{% endif %}>
+        <label for="sort_title">Title</label><br>
+
+        <input type="radio" name="sort_by" value="author" id="sort_author" onchange="this.form.submit()" {% if sort_by == 'author' %}checked{% endif %}>
+        <label for="sort_author">Author</label><br>
+
+        <input type="radio" name="sort_by" value="publication_year" id="sort_publication_year" onchange="this.form.submit()" {% if sort_by == 'publication_year' %}checked{% endif %}>
+        <label for="sort_publication_year">Publication year</label><br><br>
+    </form>
+
+    <!-- BOOKS on Display -->
+    <div class="book-list">
+        {% for book in books %}
+        <div class="book-item">
+            <img src="{{ book.cover_image_url }}" alt="Cover image of {{ book.title }}">
+            <h2>{{ book.title }}</h2>
+            <p>Author: {{ book.author_name }}</p>
+            <p>ISBN: {{ book.isbn }}</p>
+            <p>Published: {{ book.publication_year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

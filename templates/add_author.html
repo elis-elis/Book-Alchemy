@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>ADD AUTHOR</title>
+</head>
+<body>
+    <h1>Add a new author here</h1>
+
+    <!-- Display flashed messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Author Form -->
+    <form method="post" action="{{ url_for('add_author') }}">
+        <label for="author_name">Author Name:</label>
+        <input type="text" id="author_name" name="author_name" required><br><br>
+
+        <label for="birth_date">Birth Date:</label>
+        <input type="date" id="birth_date" name="birth_date"><br><br>
+
+        <label for="date_of_death">Date of Death:</label>
+        <input type="date" id="date_of_death" name="date_of_death"><br><br>
+
+        <input type="submit" value="Add Author">
+    </form>
+
+    <!-- Go Home Navigation -->
+    <div class="go-home">
+        <a href="{{ url_for('home_page') }}">Go Home</a><br>
+    </div>
+</body>
+</html>

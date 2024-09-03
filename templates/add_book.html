@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>ADD BOOK</title>
+</head>
+<body>
+    <h1>Add a new book here</h1>
+
+    <!-- Display success or error messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Book Form -->
+    <form method="post" action="{{ url_for('add_book') }}">
+        <label for="title">Book Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="isbn">ISBN:</label><br>
+        <input type="text" id="isbn" name="isbn" required><br><br>
+
+        <label for="publication_year">Publication Year:</label><br>
+        <input type="text" id="publication_year" name="publication_year"><br><br>
+
+        <label for="author_id">Author ID:</label>
+        <select name="author_id" id="author_id" required>
+            <option value="" disabled selected>Select an author</option>
+            {% for author in authors %}
+            <!-- A Python list containing all author objects retrieved from the database
+            (using Author.query.all() in the Flask route handler).
+            This list is passed to the template when rendering. -->
+                <option value="{{ author.author_id }}">{{ author.author_name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="Add Book">
+    </form>
+
+    <!-- Go Home Navigation -->
+    <div class="go-home">
+        <a href="{{ url_for('home_page') }}">Go Home</a><br>
+    </div>
+</body>
+</html>
