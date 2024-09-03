@@ -13,6 +13,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/library.sqlite'
 
 db.init_app(app)
+
+
 # This will connect the Flask app to the flask-sqlalchemy code
 # now has access to the database
 
@@ -80,14 +82,31 @@ def add_book():
 def home_page():
     # Get sorting parameter from the request
     sort_by = request.args.get('sort_by', 'title')  # Default to 'title'
+    search_query = request.args.get('search_query')
+
+    # Start building the base query
+    query = db.session.query(Book, Author).join(Author)
+
+    if search_query:
+        search_pattern = f"%{search_query}%"  # SQL LIKE pattern
+        # Since SQLAlchemy does not modify the original query object in place,
+        # the result of query.filter(...) is assigned back to query
+        query = query.filter(
+            (Book.title.ilike(search_pattern)) |
+            (Author.author_name.ilike(search_pattern))
+        )  # provides a case-insensitive version of the SQL LIKE operator
+        # uses the bitwise OR operator (|) to combine two conditions
 
     # Define the sorting logic based on the parameter
     if sort_by == 'author':
-        books = db.session.query(Book, Author).join(Author).order_by(Author.author_name).all()
+        query = query.order_by(Author.author_name)
     elif sort_by == 'publication_year':
-        books = db.session.query(Book, Author).join(Author).order_by(Book.publication_year).all()
+        query = query.order_by(Book.publication_year)
     else:
-        books = db.session.query(Book, Author).join(Author).order_by(Book.title).all()
+        query = query.order_by(Book.title)
+
+    # Execute the query
+    books = query.all()
 
     book_data = []
 
@@ -100,6 +119,10 @@ def home_page():
             'publication_year': book.publication_year,
             'cover_image_url': get_cover_image(book.isbn)
         })
+
+    # Display message if no books match search criteria
+    if search_query and not books:
+        flash('No books match your search criteria.', 'info')
 
     # Render the home.html template with the books data
     return render_template('home_page.html', books=book_data, sort_by=sort_by)

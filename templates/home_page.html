@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E's Library Home Page</title>
+    <title>E's LIBRARY HOME PAGE</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -12,9 +12,15 @@
 
     <!-- Navigation to Add Book & Add Author Pages -->
     <nav>
-    <a href="{{ url_for('add_author') }}">Add Author</a><br>
-    <a href="{{ url_for('add_book') }}">Add Book</a><br>
+        <a href="{{ url_for('add_author') }}">Add Author</a><br>
+        <a href="{{ url_for('add_book') }}">Add Book</a><br>
     </nav>
+
+    <!-- Search Form -->
+    <form method="get" action="{{ url_for('home_page') }}">
+        <input type="text" name="search_query" placeholder="Search by title or author" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
 
    <!-- Sorting Options with Radio Buttons -->
     <form method="get" action="{{ url_for('home_page') }}">
