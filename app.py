@@ -61,7 +61,6 @@ def add_book():
         title = request.form.get('title')
         isbn = request.form.get('isbn')
         publication_year = request.form.get('publication_year')
-        book_id = request.form.get('book_id')
         author_id = request.form.get('author_id')
 
         # Validate the required fields
