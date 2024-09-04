@@ -61,6 +61,7 @@ def add_book():
         title = request.form.get('title')
         isbn = request.form.get('isbn')
         publication_year = request.form.get('publication_year')
+        book_id = request.form.get('book_id')
         author_id = request.form.get('author_id')
 
         # Validate the required fields
@@ -120,6 +121,7 @@ def home_page():
             'author_name': author.author_name,
             'isbn': book.isbn,
             'publication_year': book.publication_year,
+            'book_id': book.book_id,
             'cover_image_url': get_cover_image(book.isbn)
         })
 

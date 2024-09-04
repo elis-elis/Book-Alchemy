@@ -73,9 +73,14 @@ body {
 
 /* Style each book item */
 .book-item {
+    display: flex;
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: space-between; /* Space between content elements */
+    align-items: center; /* Center align the content */
+    position: relative; /* Establish a relative positioning context */
     background-color: #a9a5a5;
     border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     overflow: hidden; /* Ensure content stays within rounded corners */
     width: 250px; /* Fixed width for book items */
     text-align: center; /* Center text */
@@ -104,7 +109,7 @@ body {
     color: ghostwhite;
 }
 
-/* Optional: add a hover effect to each book item */
+/* Hover effect to each book item */
 .book-item:hover {
     background-color: lightcoral;
     box-shadow: 2 4px 10px rgba(0, 0, 0, 0.15); /* Slightly larger shadow */
@@ -153,4 +158,35 @@ form {
 .go-home {
     text-align: center;
     margin-top: 50px;
+}
+
+
+/* Flash Messages */
+.flash-messages {
+    margin: 10px 0;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
 }

@@ -9,14 +9,16 @@
 <body>
     <h1>Add a new author here</h1>
 
-    <!-- Display flashed messages -->
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        <ul>
+        <div class="flash-messages">
             {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
             {% endfor %}
-        </ul>
+        </div>
         {% endif %}
     {% endwith %}
 
