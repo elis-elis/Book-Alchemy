@@ -24,6 +24,7 @@ db.init_app(app)
 
 @app.route('/add_author', methods=['GET', 'POST'])
 def add_author():
+    """Handles the addition of a new author."""
     if request.method == 'POST':
         # Get data from the form
         author_name = request.form.get('author_name')
@@ -54,6 +55,7 @@ def add_author():
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
+    """Handles the addition of a new book."""
     if request.method == 'POST':
         # Retrieve data from form
         title = request.form.get('title')
@@ -80,6 +82,7 @@ def add_book():
 
 @app.route('/')
 def home_page():
+    """Displays the homepage with a list of books."""
     # Get sorting parameter from the request
     sort_by = request.args.get('sort_by', 'title')  # Default to 'title'
     search_query = request.args.get('search_query')
@@ -129,6 +132,7 @@ def home_page():
 
 
 def get_cover_image(isbn):
+    """Fetches the cover image URL for a given ISBN."""
     # Use the Open Library Covers API to get the cover image URL
     cover_url = f"http://covers.openlibrary.org/b/isbn/{isbn}-M.jpg"
 
@@ -140,6 +144,37 @@ def get_cover_image(isbn):
         return cover_url
     else:
         return '/static/images/placeholder.jpg'  # Placeholder image in case cover is not available
+
+
+@app.route('/book/<int:book_id>/delete', methods=['POST'])
+def delete_book_by_id(book_id):
+    """Deletes a book and its author if the author has no other books."""
+    book = Book.query.get_or_404(book_id)
+    # If the book not found - automatically show a "404 Not Found"
+
+    author_id = book.author_id
+    # This is useful for checking if the author has other books later
+
+    try:
+        db.session.delete(book)
+        db.session.commit()
+
+        # search for any other books written by the same author, returns a list of books
+        other_books = Book.query.filter_by(author_id=author_id).all()
+        if not other_books:
+            author = Author.query.get(author_id)
+            if author:
+                db.session.delete(author)
+                db.session.commit()
+
+        flash('Book deleted successfully! 🔫', 'success')
+
+    except Exception as error_info:
+        # If an error occurs, this undoes any changes made during the operation
+        db.session.rollback()
+        flash(f'Error deleting book: {str(error_info)}', 'danger')
+
+    return redirect(url_for('home_page'))
 
 
 if __name__ == '__main__':

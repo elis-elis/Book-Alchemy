@@ -10,30 +10,36 @@
     <h1>°°°°°° SALUT, and welcome °°°°°°°</h1>
     <h2>E's Library</h2>
 
-    <!-- Navigation to Add Book & Add Author Pages -->
-    <nav>
-        <a href="{{ url_for('add_author') }}">Add Author</a><br>
-        <a href="{{ url_for('add_book') }}">Add Book</a><br>
+    <!-- Navigation -->
+    <nav class="navigation">
+        <!-- Button for 'Add Author' -->
+        <button onclick="window.location.href='{{ url_for('add_author') }}'">Add Author</button><br>
+
+        <!-- Button for 'Add Book' -->
+        <button onclick="window.location.href='{{ url_for('add_book') }}'">Add Book</button><br>
+
+        <!-- Search Form -->
+        <form method="get" action="{{ url_for('home_page') }}">
+            <input type="text" name="search_query" placeholder="Search by title or author" value="{{ search_query }}">
+            <button type="submit">Search</button>
+        </form>
     </nav>
 
-    <!-- Search Form -->
-    <form method="get" action="{{ url_for('home_page') }}">
-        <input type="text" name="search_query" placeholder="Search by title or author" value="{{ search_query }}">
-        <button type="submit">Search</button>
-    </form>
-
    <!-- Sorting Options with Radio Buttons -->
-    <form method="get" action="{{ url_for('home_page') }}">
-        <label>Sort By:</label><br>
-        <input type="radio" name="sort_by" value="title" id="sort_title" onchange="this.form.submit()" {% if sort_by == 'title' %}checked{% endif %}>
-        <label for="sort_title">Title</label><br>
+    <div class="sort-by">
+        <form method="get" action="{{ url_for('home_page') }}">
 
-        <input type="radio" name="sort_by" value="author" id="sort_author" onchange="this.form.submit()" {% if sort_by == 'author' %}checked{% endif %}>
-        <label for="sort_author">Author</label><br>
+            <label id="sort-by"><strong>Sort By:</strong></label><br>
+            <input type="radio" name="sort_by" value="title" id="sort_title" onchange="this.form.submit()" {% if sort_by == 'title' %}checked{% endif %}>
+            <label for="sort_title">Title</label><br>
 
-        <input type="radio" name="sort_by" value="publication_year" id="sort_publication_year" onchange="this.form.submit()" {% if sort_by == 'publication_year' %}checked{% endif %}>
-        <label for="sort_publication_year">Publication year</label><br><br>
-    </form>
+            <input type="radio" name="sort_by" value="author" id="sort_author" onchange="this.form.submit()" {% if sort_by == 'author' %}checked{% endif %}>
+            <label for="sort_author">Author</label><br>
+
+            <input type="radio" name="sort_by" value="publication_year" id="sort_publication_year" onchange="this.form.submit()" {% if sort_by == 'publication_year' %}checked{% endif %}>
+            <label for="sort_publication_year">Publication year</label><br><br>
+            </form>
+    </div>
 
     <!-- BOOKS on Display -->
     <div class="book-list">
@@ -44,6 +50,11 @@
             <p>Author: {{ book.author_name }}</p>
             <p>ISBN: {{ book.isbn }}</p>
             <p>Published: {{ book.publication_year }}</p>
+
+            <!-- Delete Button -->
+            <form action="{{ url_for('delete_book_by_id', book_id=book.id) }}" method="post" style="display: inline;">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this book?');">Delete Book</button>
+            </form>
         </div>
         {% endfor %}
     </div>
